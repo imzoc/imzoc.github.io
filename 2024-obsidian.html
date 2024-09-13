@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project: My Awesome Project</title>
+    <title>Project: My Obsidian Vault Viewer</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -22,12 +22,44 @@
             color: blue;
             text-decoration: none;
         }
+        #content {
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>My Awesome Project</h1>
-        <p>This is a project I'm working on. [Add more details about the project here.]</p>
+        <h1>My Obsidian Vault Viewer</h1>
+        <p>This page renders markdown from my Obsidian vault hosted on GitHub.</p>
+        
+        <!-- Container for displaying the rendered markdown -->
+        <div id="content">Loading markdown...</div>
+        
+        <script src="https://cdn.jsdelivr.net/npm/showdown@2.1.0/dist/showdown.min.js"></script>
+        <script>
+            // Function to load and display markdown file
+            async function loadMarkdown() {
+                // URL to the raw markdown file in your vault
+                const mdUrl = 'https://raw.githubusercontent.com/YOUR_USERNAME/obsidian-vault-repo/main/your-file.md';
+                
+                // Fetch the markdown file
+                const response = await fetch(mdUrl);
+                const markdown = await response.text();
+                
+                // Convert markdown to HTML
+                const converter = new showdown.Converter();
+                const html = converter.makeHtml(markdown);
+                
+                // Insert HTML into the content div
+                document.getElementById('content').innerHTML = html;
+            }
+            
+            // Load markdown file on page load
+            loadMarkdown();
+        </script>
+        
         <p><a href="index.html">Back to Profile</a></p>
     </div>
 </body>
